@@ -99,7 +99,7 @@ document.getElementById('newWage').addEventListener('click', function(){
             break;
         case '2':
             if((hours.value!== '')&&(hourlyWage.value!== '')){
-                var amountAdd = parseFloat(hours.value*hourlyWage.value*4);
+                var amountAdd = parseFloat(hours.value*hourlyWage.value)*4;
                 let appendWage = new Budget('Hourly', amountAdd);
                 wageValues.push(appendWage);
                 appendWage.appendSalary();
