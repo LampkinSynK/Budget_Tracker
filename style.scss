@@ -1,17 +1,31 @@
+// Initializing Colors and Mixin
+$primary-color: rgb(50, 136, 107);
+$hover-color: rgb(254, 93, 93);
+$list-color: rgb(255, 255, 255), rgb(156, 156, 156), rgb(252, 252, 252), rgb(255, 255, 255);
+@mixin gradient($direction, $list) { 
+    background: -webkit-linear-gradient($direction, $list);
+    background: -moz-linear-gradient($direction, $list);
+    background: -o-linear-gradient($direction, $list);
+    background: linear-gradient($direction, $list);  
+  }
+
+// Universal Styling
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
 }
 
+// Body gradient
 body {
-    background-color: rgb(255, 255, 255);
+    @include gradient(to bottom, $list-color);
 }
 
+// Webpage Positioning and Display
 .top_section {
     display: flex;
     width: 100%;
     height: 20vw;
-    background-color: rgb(50, 136, 107);
+    background-color: $primary-color;
     justify-content: center;
     align-items: center;
 }
@@ -82,7 +96,7 @@ body {
 }
 
 #wage_list li:hover, #bought_list li:hover{
-    color: rgb(255, 0, 0);
+    color: $hover-color;
     cursor: pointer;
     text-decoration: line-through;
 }

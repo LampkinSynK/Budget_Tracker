@@ -1,3 +1,4 @@
+// All Variables Initialized
 const monthlyWage = document.getElementById('month_wage');
 const hourlyWage = document.getElementById('hourly_wage');
 const hours = document.getElementById('hours');
@@ -14,13 +15,31 @@ var boughtValues = [];
 var expenses = 0;
 var income = 0;
 
+
+// Parent Class Budget Created
 class Budget{
     constructor(name, amount) {
         this.name = name;
         this.amount = amount;
-        // this.id = id;
+    }
+    // Checks when amount left is negative
+    checkBudget() {
+        if ((income-expenses) < 0){
+            amountLeft.style.color = 'red';
+        }
+        else {
+            amountLeft.style.color = 'white';
+        }
     }
 
+}
+
+// Child Classe Income
+class Income extends Budget {
+    constructor(name, amount) {
+        super(name, amount)
+    }
+    // Method to add to Amount left & Show List Items on Screen
     appendSalary() {
         income+= this.amount;
         var save = this.amount;
@@ -28,7 +47,7 @@ class Budget{
         const wageText = document.createElement('li');
         wageText.innerHTML = `${this.name}: $${this.amount}`;
         wageList.appendChild(wageText);
-
+        // Checks when List Item is clicked and removes
         wageText.addEventListener('click', function(){
             wageText.remove();
             income-= save;
@@ -40,16 +59,17 @@ class Budget{
                 amountLeft.style.color = 'white';
             }
         })
-
-
-        if ((income-expenses) < 0){
-            amountLeft.style.color = 'red';
-        }
-        else {
-            amountLeft.style.color = 'white';
-        }
+        this.checkBudget();
     }
+    
+}
 
+// Child Class Expense
+class Expense extends Budget {
+    constructor(name, amount) {
+        super(name, amount)
+    }
+    // Method to take away from Amount left & Show List Items on Screen
     appendExpenses() {
         expenses+= this.amount;
         var save = this.amount;
@@ -57,7 +77,7 @@ class Budget{
         const wageText = document.createElement('li');
         wageText.innerHTML = `${this.name}: $${this.amount}`;
         boughtList.appendChild(wageText);
-
+        // Checks when List Item is clicked and removes
         wageText.addEventListener('click', function(){
             wageText.remove();
             expenses-= save;
@@ -69,29 +89,22 @@ class Budget{
                 amountLeft.style.color = 'white';
             }
         })
-
-        if ((income-expenses) < 0){
-            amountLeft.style.color = 'red';
-        }
-        else {
-            amountLeft.style.color = 'white';
-        }
+        this.checkBudget();
     }
-
-    reset() {
-        wageValues = [];
-        boughtValues = [];
-    }
+    
 }
 
+// Checking to see when submit button is clicked
 document.getElementById('newWage').addEventListener('click', function(){
     var selectbox = document.getElementById("selectBox");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    // Determining which type of income will be appeneded
     switch (selectedValue) {
         case '1':
             if(monthlyWage.value !== ''){
                 var amountAdd = parseFloat(monthlyWage.value);
-                let appendWage = new Budget('Salary', amountAdd);
+                // creating new Income Salary Object
+                let appendWage = new Income('Salary', amountAdd);
                 wageValues.push(appendWage);
                 appendWage.appendSalary();
                 monthlyWage.value = '';
@@ -100,7 +113,8 @@ document.getElementById('newWage').addEventListener('click', function(){
         case '2':
             if((hours.value!== '')&&(hourlyWage.value!== '')){
                 var amountAdd = parseFloat(hours.value*hourlyWage.value)*4;
-                let appendWage = new Budget('Hourly', amountAdd);
+                // Creating new Income Hourly Object
+                let appendWage = new Income('Hourly', amountAdd);
                 wageValues.push(appendWage);
                 appendWage.appendSalary();
                 hours.value = '';
@@ -110,7 +124,8 @@ document.getElementById('newWage').addEventListener('click', function(){
         case '3':
             if(oneTime.value !== ''){
                 var amountAdd = parseFloat(oneTime.value);
-                let appendWage = new Budget('One Time', amountAdd);
+                // Creating new Income One Time Object
+                let appendWage = new Income('One Time', amountAdd);
                 wageValues.push(appendWage);
                 appendWage.appendSalary();
                 oneTime.value = '';
@@ -119,10 +134,12 @@ document.getElementById('newWage').addEventListener('click', function(){
     }
 })
 
+// Checking when Expense Submit is pushed
 document.getElementById('newExpense').addEventListener('click', function(){
     if ((itemSpent.value!=='')&&(amountSpent.value!=='')) {
         var amountAdd = parseFloat(amountSpent.value);
-        let appendWage = new Budget(itemSpent.value, amountAdd);
+        // Creating new Expense Object
+        let appendWage = new Expense(itemSpent.value, amountAdd);
         boughtValues.push(appendWage);
         appendWage.appendExpenses();
         itemSpent.value = '';
@@ -133,6 +150,7 @@ document.getElementById('newExpense').addEventListener('click', function(){
     }
 })
 
+// Function to change Dropdown for Income box
 changeFunc = () => {
     var selectbox = document.getElementById("selectBox");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
@@ -157,5 +175,3 @@ changeFunc = () => {
             break;
     }
 }
-
-

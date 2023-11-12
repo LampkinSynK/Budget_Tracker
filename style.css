@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: rgb(255, 255, 255);
+  background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(156, 156, 156), rgb(252, 252, 252), rgb(255, 255, 255));
 }
 
 .top_section {
@@ -80,7 +80,7 @@ body {
 }
 
 #wage_list li:hover, #bought_list li:hover {
-  color: rgb(255, 0, 0);
+  color: rgb(254, 93, 93);
   cursor: pointer;
   text-decoration: line-through;
 }/*# sourceMappingURL=style.css.map */
